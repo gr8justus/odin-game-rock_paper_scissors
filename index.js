@@ -4,6 +4,7 @@
 function getComputerChoice() {
     let randomNum = Math.floor(Math.random() * 3) + 1;
     let computerChoice = null;
+
     switch (randomNum) {
         case 1:
             computerChoice = 'rock';
@@ -15,6 +16,7 @@ function getComputerChoice() {
             computerChoice = 'paper';
             break;
     }
+
     return computerChoice;
 }
 
@@ -26,53 +28,73 @@ function getPlayerChoice() {
 
 // game result revealed
 function playRound(computerSelection, playerSelection) {
-    let winner = null;
+    let score = null;
     
     if (computerSelection === 'rock') {
         switch (playerSelection) {
             case 'paper':
-                winner = 'You Won! Paper beats Rock';
+                score = 'You Won! Paper beats Rock';
                 break;
             case 'scissors':
-                winner = 'You Lose! Rock beats Scissors';
+                score = 'You Lose! Rock beats Scissors';
                 break;
             case 'rock':
-                winner = 'It\'s a draw!'
+                score = 'It\'s a draw!'
                 break;
-            default:
-                winner = 'Option not available!!!'
         }
     } else if (computerSelection === 'scissors') {
         switch (playerSelection) {
             case 'rock':
-                winner = 'You Won! Rock beats Scissors';
+                score = 'You Won! Rock beats Scissors';
                 break;
             case 'paper':
-                winner = 'You Lose! Scissors beats Paper';
+                score = 'You Lose! Scissors beats Paper';
                 break;
             case 'scissors':
-                winner = 'It\'s a draw!'
+                score = 'It\'s a draw!'
                 break;
-            default:
-                winner = 'Option not available!!!'
         }
     } else if (computerSelection === 'paper') {
         switch (playerSelection) {
             case 'scissors':
-                winner = 'You Won! Scissors beats paper';
+                score = 'You Won! Scissors beats paper';
                 break;
             case 'rock':
-                winner = 'You Lose! Paper beats rock';
+                score = 'You Lose! Paper beats rock';
                 break;
             case 'paper':
-                winner = 'It\'s a draw!'
+                score = 'It\'s a draw!'
                 break;
-            default:
-                winner = 'Option not available!!!'
         }
     }
-    console.log(winner);
+    return score;
 }
 
 // play game
-playRound(getComputerChoice(), getPlayerChoice());
+function game() {
+    let marks = 0;
+    let finalScore = null;
+
+    for (let i = 1; i <= 5; i++) {
+        let score = playRound(getComputerChoice(), getPlayerChoice());
+        console.log(score);
+        
+        if (/won/i.test(score) === true) {
+            marks += 2; 
+        } else if (/draw/i.test(score) === true) {
+            marks += 1; 
+        }
+    }
+    
+    if (marks > 5) {
+        finalScore = `Champion! ${marks} out of 10`;
+    }  else if (marks = 5) {
+        finalScore = `It\'s a draw! ${marks} out of 10`;
+    }  else {
+        finalScore = `Keep trying! ${marks} out of 10`;
+    }
+
+    console.log(finalScore);
+}
+    
+game();
